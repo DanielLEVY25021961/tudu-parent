@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- Automatically receives AuthenticationEvent messages -->
+	<bean id="loggerListener"
+		class="org.acegisecurity.event.authentication.LoggerListener" />
+
+	<bean id="authenticationManager"
+		class="org.acegisecurity.providers.ProviderManager">
+		<property name="providers">
+			<list>
+				<ref bean="daoAuthenticationProvider" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- ===================== daoAuthenticationProvider ==================== -->
+	<bean id="daoAuthenticationProvider"
+		class="org.acegisecurity.providers.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService">
+			<ref local="userDetailsService" />
+		</property>
+		<property name="userCache">
+			<ref local="userCache" />
+		</property>
+	</bean>
+
+	<bean id="userDetailsService"
+		class="tudu.security.UserDetailsServiceImpl">
+		<property name="userManager">
+			<ref bean="userManager" />
+		</property>
+	</bean>
+
+	<bean id="userCache"
+		class="org.acegisecurity.providers.dao.cache.EhCacheBasedUserCache">
+		<property name="cache">
+			<bean
+				class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+				<property name="cacheManager">
+					<bean
+						class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+						
+						<property name="configLocation">
+							<value>classpath:/tudu/security/ehcache-acegi.xml</value>
+						</property>
+					</bean>
+				</property>
+				<property name="cacheName">
+					<value>AcegiUserCache</value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- ===================== accessDecisionManager ==================== -->
+	<bean id="accessDecisionManager"
+		class="org.acegisecurity.vote.AffirmativeBased">
+		<property name="allowIfAllAbstainDecisions">
+			<value>false</value>
+		</property>
+		<property name="decisionVoters">
+			<list>
+				<ref local="roleVoter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="roleVoter" class="org.acegisecurity.vote.RoleVoter">
+		<property name="rolePrefix">
+			<value />
+		</property>
+	</bean>
+</beans>

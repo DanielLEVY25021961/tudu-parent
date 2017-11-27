@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    
+    <bean id="userManager" class="tudu.aspects.notify.EmptyUserManager" /> 
+    
+    <bean id="notifyAspect" class="tudu.aspects.notify.aspectj.NotifierAfterReturningAdvice">
+        <property name="notifier" ref="userManager" />            
+    </bean>
+    
+    <aop:config>
+        <aop:aspect ref="notifyAspect">
+            <aop:declare-parents
+                types-matching="tudu.aspects.notify.EmptyUserManager"
+                implement-interface="tudu.service.notify.INotifier"
+                default-impl="tudu.service.notify.impl.CountNotifier"/>
+            <aop:after-returning method="handleNotification"
+                pointcut="execution(* tudu.aspects.notify.ExceptionUserManager.createUser(..))"
+            />            
+        </aop:aspect>
+    </aop:config>
+    
+</beans>

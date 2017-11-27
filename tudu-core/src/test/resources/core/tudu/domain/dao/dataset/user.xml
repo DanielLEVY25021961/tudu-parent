@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    
+    <!-- empty this one -->
+    <todo_list />
+
+    <tuser login="acogoluegnes" password="arnaud" firstName="Arnaud" lastname="Cogoluegnes" enabled="true" />
+    <tuser login="acogo" password="aurelien" firstName="Aurelien" lastname="Cogoluegnes" enabled="true" />
+    <tuser login="templth" password="thierry" firstName="Thierry" lastname="Templier" enabled="true" />
+    
+    <!-- empty this one too -->
+    <todo />
+    
+    <TUSER_ROLE />
+
+</dataset>

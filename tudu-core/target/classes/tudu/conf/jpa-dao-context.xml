@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+      
+    
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    	<property name="dataSource" ref="dataSource" />
+    	<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+      	<property name="persistenceXmlLocation" value="classpath:/tudu/conf/persistence.xml"/>
+        <property name="jpaProperties" ref="jpaProperties" />
+    </bean>
+	
+	<!-- JPA annotations bean post processor, inject the DAO thanks to the annotations -->
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+	<!-- Exception translation bean post processor, decorates beans that carry the Repository annotation  -->
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+  
+ 	<bean id="userDAO" class="tudu.domain.dao.jpa.UserDAOJpa"/>
+ 	
+ 	<bean id="roleDAO" class="tudu.domain.dao.jpa.RoleDAOJpa"/>
+ 
+ 	<bean id="todoListDAO" class="tudu.domain.dao.jpa.TodoListDAOJpa"/>
+ 
+ 	<bean id="todoDAO" class="tudu.domain.dao.jpa.TodoDAOJpa"/>
+ 	
+ 	<bean id="propertyDAO" class="tudu.domain.dao.jpa.PropertyDAOJpa"/>
+ 	
+</beans>

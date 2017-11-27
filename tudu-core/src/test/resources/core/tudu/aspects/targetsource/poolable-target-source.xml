@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    <bean id="tuduConnectionTarget"
+        class="tudu.aspects.targetsource.impl.LongRunningTuduConnectionImpl"
+        scope="prototype">
+        <constructor-arg value="poolableBean" />
+    </bean>
+    
+    <bean id="pool"
+        class="org.springframework.aop.target.CommonsPoolTargetSource">
+        <property name="targetBeanName" value="tuduConnectionTarget" />
+        <property name="maxSize" value="10" />
+    </bean>
+    
+    <bean id="tuduConnection" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource" ref="pool" />
+    </bean>
+    
+</beans>

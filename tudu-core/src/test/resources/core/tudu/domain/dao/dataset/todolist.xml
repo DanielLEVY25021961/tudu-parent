@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+
+  <tuser login="acogoluegnes" password="arnaud" firstName="Arnaud" lastname="Cogoluegnes" enabled="true" />
+  <tuser login="acogo" password="aurelien" firstName="Aurelien" lastname="Cogoluegnes" enabled="true" />
+  <tuser login="templth" password="thierry" firstName="Thierry" lastname="Templier" enabled="true" />
+  
+  <todo_list id="tl one" lastupdate="2008-08-06" name="todo list 1" rssallowed="true" />  
+  <todo_list id="tl two" lastupdate="2008-08-06" name="todo list 2" rssallowed="true" />
+  <todo_list id="tl three" lastupdate="2008-08-06" name="todo list 3" rssallowed="true" />
+  
+  <todo id="t one" completed="true" hasnotes="true" priority="1" assigneduser_login="acogoluegnes" todolist_id="tl one" />
+  <todo id="t two" completed="true" hasnotes="true" priority="1" assigneduser_login="acogoluegnes" todolist_id="tl one" />
+  <todo id="t three" completed="true" hasnotes="true" priority="1" assigneduser_login="acogo" todolist_id="tl two" /> 
+
+    <TUSER_ROLE />
+
+</dataset>

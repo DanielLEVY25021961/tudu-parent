@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    
+    <!-- empty this one -->
+    <todo_list />
+
+    <tuser login="acogoluegnes" password="mdp4arno" firstName="Arnaud" lastname="Cogoluegnes" enabled="true" />
+    <tuser login="acogo" password="mdp4aurel" firstName="Aurelien" lastname="Cogoluegnes" enabled="true" />
+    <tuser login="templth" password="mdp4th" firstName="Thierry" lastname="Templier" enabled="false" />
+    
+    <role role="role_admin" />
+    <role role="role_user" />
+    
+    <tuser_role tuser_login="acogoluegnes" roles_role="role_admin" />
+    <tuser_role tuser_login="acogoluegnes" roles_role="role_user" />
+    <tuser_role tuser_login="templth" roles_role="role_user" />
+    
+    <!-- empty this one too -->
+    <todo />
+
+</dataset>

@@ -1,0 +1,54 @@
+dn: ou=people,o=tudu
+objectClass: organizationalUnit
+ou: people
+
+dn: ou=groups,o=tudu
+objectClass: organizationalUnit
+objectClass: top
+ou: groups
+description: Tudu Lists User Groups
+
+dn: cn=acogoluegnes,ou=people,o=tudu
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: acogoluegnes
+sn: arnaud
+userPassword:: bWRwNGFybm8=
+
+dn: cn=acogo,ou=people,o=tudu
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: acogo
+sn: acogo
+userPassword:: bWRwNGF1cmVs
+
+dn: cn=templth,ou=people,o=tudu
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+cn: templth
+sn: templth
+userPassword:: bWRwNHRo
+
+dn: cn=admin,ou=groups,o=tudu
+objectClass: groupOfNames
+objectClass: top
+cn: admin
+description: Tudu Admin Groups
+member: cn=acogoluegnes,ou=people,o=tudu
+ou: admin
+
+dn: cn=user,ou=groups,o=tudu
+objectClass: groupOfNames
+objectClass: top
+cn: user
+description: Tudu Admin Groups
+member: cn=acogoluegnes,ou=people,o=tudu
+member: cn=acogo,ou=people,o=tudu
+member: cn=templth,ou=people,o=tudu
+ou: user

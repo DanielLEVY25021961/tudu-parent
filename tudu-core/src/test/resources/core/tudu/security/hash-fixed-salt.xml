@@ -1,0 +1,20 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security.xsd"> 
+
+
+    <authentication-provider>
+        <password-encoder hash="sha">
+            <salt-source system-wide="grain de sel"/>
+        </password-encoder>
+        <user-service>
+            <user name="acogoluegnes" password="1af4b424fce834b8ea1cefd17cef7c53a511f8ba" authorities="ROLE_ADMIN"/>            
+        </user-service>
+    </authentication-provider>   
+   
+</beans:beans>

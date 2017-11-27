@@ -1,0 +1,21 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-2.0.2.xsd">
+    
+    <authentication-provider user-service-ref="userDetailsService" />
+    
+    <beans:bean id="userDetailsService" class="tudu.security.UserDetailsServiceImpl">
+        <beans:property name="userManager" ref="userManager" />
+    </beans:bean>
+    
+    <beans:bean id="userCache" class="org.springframework.security.providers.dao.cache.NullUserCache" />
+    
+    <!-- Automatically receives AuthenticationEvent messages -->
+    <beans:bean id="loggerListener" class="org.springframework.security.event.authentication.LoggerListener" />
+	
+</beans:beans>

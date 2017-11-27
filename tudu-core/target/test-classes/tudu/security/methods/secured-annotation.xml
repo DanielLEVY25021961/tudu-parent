@@ -1,0 +1,22 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security.xsd"> 
+
+
+    <global-method-security secured-annotations="enabled" />
+    
+    <beans:bean id="userManager" class="tudu.security.methods.UserManagerSecuredAnnotation" />
+    
+    <authentication-provider>
+        <user-service>
+            <user name="acogoluegnes" password="mdp4arno" authorities="ROLE_ADMIN" />
+            <user name="templth" password="mdp4th" authorities="ROLE_USER" />
+        </user-service>
+    </authentication-provider>
+   
+</beans:beans>

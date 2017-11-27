@@ -1,0 +1,9 @@
+                                ----------
+                                Tudu Lists
+                                ---------
+                                Julien Dubois
+
+Tudu Lists domain and service layer
+
+  This module contains Tudu Lists' database access (aka "domain") and business (aka "service") layers.
+

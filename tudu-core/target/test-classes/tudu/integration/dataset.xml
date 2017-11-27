@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <property pkey="application.static.path" value="" />
+    <property pkey="google.analytics.key" value="" />
+    <property pkey="smtp.from" value="Tudu Lists" />
+    <property pkey="smtp.host" value="localhost" />
+    <property pkey="smtp.password" value="" />
+    <property pkey="smtp.port" value="25" />
+    <property pkey="smtp.user" value="" />
+    <role role="ROLE_ADMIN" />
+    <role role="ROLE_USER" />
+    <todo_list />
+    <todo />
+    <tuser login="admin" password="admin" enabled="true"
+        firstName="" lastName="" email="" dateFormat="MM/dd/yyyy"
+        creationDate="2000-01-01 00:00:00.0" lastAccessDate="2008-08-20 22:35:39.0" />
+    <tuser_role tuser_login="admin" roles_role="ROLE_ADMIN" />
+    <tuser_role tuser_login="admin" roles_role="ROLE_USER" />
+    <tuser_todo_list />
+</dataset>

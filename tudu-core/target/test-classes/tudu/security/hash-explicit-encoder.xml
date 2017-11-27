@@ -1,0 +1,24 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security.xsd"> 
+
+
+    <authentication-provider>
+        <password-encoder ref="passwordEncoder">
+            <salt-source user-property="username" />
+        </password-encoder>
+        <user-service>
+            <user name="acogoluegnes" password="4938e0cb9a6dd7779f0a8f569aafd3fd21fe086eb7a9503d6cabb6f62350a85708c652bca1d92bb3b146c7b4e14b13c9a1e0157654c12ed749ccb429f0dff699" authorities="ROLE_ADMIN"/>            
+        </user-service>
+    </authentication-provider>
+    
+    <beans:bean id="passwordEncoder" class="org.springframework.security.providers.encoding.ShaPasswordEncoder">
+        <beans:constructor-arg value="512" />
+    </beans:bean>   
+   
+</beans:beans>

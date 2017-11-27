@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ********************************************************** -->
+<!-- hiérarchie des niveaux : FATAL>ERROR>WARN>INFO>DEBUG>TRACE --> 
+<!-- ********************************************************** -->
+<!-- le niveau OFF permet de bloquer complètement un Logger. --> 
+
+<Configuration name="DEV" status="ERROR">
+ 
+
+	<Appenders>
+	
+		 <!-- Console Appender -->
+	    <Console name="Console" target="SYSTEM_OUT">
+	      <PatternLayout pattern="%d{yyyy-MMMM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
+	    </Console>
+	    
+ 		<!-- RollingFile Appender -->
+		<RollingFile name="RollingFile" filename="D:/Donnees/eclipse/eclipseworkspace_neon/tudu-parent/tudu-core/logs/log4j2.log"
+			filepattern="${logPath}/%d{YYYYMMddHHmmss}-fargo.log">
+			<PatternLayout pattern="%d{yyyy-MMMM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
+<!-- 			<PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n" /> -->
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="20" />
+		</RollingFile>
+		
+	</Appenders>
+
+	
+	<Loggers>
+
+	
+		<Root level="DEBUG">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+		</Root>
+
+	    <!-- Log custom packages -->
+	    <Logger name="tudu" level="DEBUG" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+
+		<Logger name="org.apache" level="DEBUG" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+	    
+	    <Logger name="org.springframework" level="DEBUG" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+
+	    <Logger name="org.springframework.security" level="DEBUG" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+
+	    <Logger name="org.codehaus" level="DEBUG" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+	    	    
+	    <!-- Log everything in hibernate -->
+	    <Logger name="org.hibernate" level="warn" additivity="false">
+<!-- 	    <Logger name="org.hibernate" level="fatal" additivity="false"> -->
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+	
+	    <!-- Log SQL statements -->
+<!-- 	    <Logger name="org.hibernate.SQL" level="debug" additivity="false"> -->
+	    <Logger name="org.hibernate.SQL" level="fatal" additivity="false">
+	      <AppenderRef ref="Console" />
+<!-- 	      <AppenderRef ref="File" /> -->
+	    </Logger>
+	
+	    <!-- Log JDBC bind parameters -->
+<!-- 	    <Logger name="org.hibernate.type.descriptor.sql" level="trace" additivity="false"> -->
+	    <Logger name="org.hibernate.type.descriptor.sql" level="debug" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+<!-- 	      <AppenderRef ref="File" /> -->
+	    </Logger>
+	
+	    <Logger name="net.sf.ehcache" level="DEBUG" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+
+	    <Logger name="net.sf.navigator" level="DEBUG" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+
+	    <Logger name="net.sf.acegisecurity" level="DEBUG" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+
+	    <Logger name="org.directwebremoting" level="DEBUG" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+
+
+		<Logger name="org.apache.tomcat" level="info" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+
+		<Logger name="org.apache.tomcat.util.digester.SetPropertiesRule" 
+			level="info" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+
+		<Logger name="org.apache.catalina" 
+			level="info" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+
+		<Logger name="org.apache.catalina.startup.VersionLoggerListener" 
+			level="info" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+
+
+		<Logger name="org.apache.jasper" 
+			level="info" additivity="false">
+	      <AppenderRef ref="Console" />
+	      <AppenderRef ref="RollingFile" />
+	    </Logger>
+	    
+	    
+		
+	</Loggers>
+	
+</Configuration>

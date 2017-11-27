@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+    
+    
+    <sec:authentication-provider>
+        <sec:user-service>
+            <sec:user name="acogoluegnes" password="mdp4arno" authorities="ROLE_ADMIN" />
+        </sec:user-service>
+    </sec:authentication-provider>
+    
+    
+    <bean id="authenticationProvider" class="org.springframework.security.providers.dao.DaoAuthenticationProvider">  
+        <!-- hint to add the provider to the default ProviderManager -->      
+        <sec:custom-authentication-provider/>   
+        <property name="userDetailsService" ref="userDetailsService" />   
+    </bean>
+    
+    <bean id="userDetailsService" class="org.springframework.security.userdetails.memory.InMemoryDaoImpl">
+        <property name="userMap">
+            <value>
+              templth=mdp4th,ROLE_USER
+            </value>
+        </property>
+    </bean>
+    
+</beans>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="mysqlDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/tudu?characterEncoding=UTF-8"/>
+		<property name="username" value="root"/>
+		<property name="password" value=""/>
+		<property name="maxActive" value="50"/>
+		<property name="maxIdle" value="30"/>
+		<property name="maxWait" value="1000"/>
+		<property name="poolPreparedStatements" value="true"/>
+		<property name="maxOpenPreparedStatements" value="-1"/>
+	</bean>
+	
+	<bean id="hsqldbDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+		<property name="url" value="jdbc:hsqldb:mem:tudu"/>
+		<property name="username" value="sa"/>
+		<property name="password" value=""/>
+		<property name="maxActive" value="50"/>
+		<property name="maxIdle" value="30"/>
+		<property name="maxWait" value="1000"/>
+		<property name="poolPreparedStatements" value="true"/>
+		<property name="maxOpenPreparedStatements" value="-1"/>
+	</bean>
+      
+    <bean id="dataSourceFactory" 
+    		class="tudu.domain.configuration.DataSourceFactory"
+    		init-method="init">
+    	<property name="jndiDatasourceName">
+			<value>jdbc/tudu</value>
+		</property>
+		<property name="mysqlDataSource">
+			<ref bean="mysqlDataSource" />
+		</property>
+		<property name="hsqldbDataSource">
+			<ref bean="hsqldbDataSource" />
+		</property>
+    </bean>
+	
+	<bean id="dataSource"
+      factory-bean="dataSourceFactory"
+      factory-method="getDataSource"/>
+      
+    <bean id="hibernateJpaVendorAdapter"
+      factory-bean="dataSourceFactory"
+      factory-method="getHibernateJpaVendorAdapter"/>  
+ 	
+	<bean id="entityManagerFactory"
+        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        
+        <property name="dataSource">
+ 			<ref bean="dataSource" />
+		</property>    
+        <property name="jpaVendorAdapter">
+        	<ref bean="hibernateJpaVendorAdapter" />
+        </property>
+        <property name="persistenceXmlLocation">
+			<value>classpath:/tudu/domain/persistence.xml</value>
+		</property>    
+    </bean>
+ 
+ 	<bean id="transactionManager"
+		class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory">
+			<ref bean="entityManagerFactory" />
+ 		</property>
+ 	</bean>
+ 
+	<!-- JPA annotations bean post processor -->
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+	<!-- Exception translation bean post processor -->
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+  
+ 	<bean id="userDAO"
+		class="tudu.domain.dao.jpa.UserDAOJpa"/>
+ 	
+ 	<bean id="roleDAO"
+		class="tudu.domain.dao.jpa.RoleDAOJpa"/>
+ 
+ 	<bean id="todoListDAO"
+		class="tudu.domain.dao.jpa.TodoListDAOJpa"/>
+ 
+ 	<bean id="todoDAO"
+		class="tudu.domain.dao.jpa.TodoDAOJpa"/>
+ 	
+ 	<bean id="propertyDAO"
+		class="tudu.domain.dao.jpa.PropertyDAOJpa"/>
+</beans>

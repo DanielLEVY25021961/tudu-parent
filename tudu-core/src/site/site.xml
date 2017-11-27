@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Tudu Lists">
+	<bannerLeft>
+		<name>Tudu Lists</name>
+		<src>../images/tudu_logo.png</src>
+		<href>http://tudu.sourceforge.net/</href>
+	</bannerLeft>
+	<bannerRight>
+		<name>SourceForge</name>
+		<src>http://sourceforge.net/sflogo.php?group_id=131842&amp;type=1</src>
+		<href>http://sourceforge.net/projects/tudu</href>
+	</bannerRight>
+	<body>
+		<menu name="Home">
+			<item name="Main page" href="../index.html" />
+		</menu>
+		<menu name="Development information">
+			<item name="SourceForge summary" href="http://www.sourceforge.net/projects/tudu" />
+			<item name="Fisheye" href="http://fisheye3.cenqua.com/browse/tudu" />
+		</menu>
+		
+		${reports}
+		
+	</body>
+</project>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    <bean id="userManager" class="tudu.aspects.notify.EmptyUserManager" />
+    
+    <bean id="notifier" class="tudu.service.notify.impl.CountNotifier" />
+    
+    <bean id="notifyAspect" class="tudu.aspects.notify.classic.NotifierAdvice">
+        <property name="notifier" ref="notifier" />            
+    </bean>
+    
+    <bean id="notifierAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+        <property name="advice" ref="notifyAspect" />       
+        <property name="mappedName" value="createUser" />         
+    </bean>
+    
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+    
+</beans>

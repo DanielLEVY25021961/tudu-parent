@@ -1,0 +1,39 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security.xsd"> 
+
+
+    <global-method-security access-decision-manager-ref="accessDecisionManager">
+        <protect-pointcut expression="execution(* tudu.security.voters.EmptyUserManager.createUser(..))" access="USER_ACOGOLUEGNES" />
+        <protect-pointcut expression="execution(* tudu.security.voters.EmptyUserManager.findUser(..))" access="ROLE_USER" />
+    </global-method-security>
+    
+    <beans:bean id="userManager" class="tudu.security.voters.EmptyUserManager" />
+    
+    <authentication-provider>
+        <user-service>
+            <user name="acogoluegnes" password="mdp4arno" authorities="ROLE_ADMIN,ROLE_USER" />
+            <user name="templth" password="mdp4th" authorities="ROLE_USER" />
+        </user-service>
+    </authentication-provider>
+    
+    <beans:bean id="accessDecisionManager" class="org.springframework.security.vote.AffirmativeBased">
+        <beans:property name="decisionVoters">
+            <beans:list>
+                <beans:bean class="org.springframework.security.vote.RoleVoter" />
+                <beans:bean class="org.springframework.security.vote.AuthenticatedVoter" />
+                <beans:bean class="tudu.security.voters.UserVoter" />
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+    
+<!--    <http access-decision-manager-ref="accessDecisionManager">
+
+        </http>-->
+   
+</beans:beans>

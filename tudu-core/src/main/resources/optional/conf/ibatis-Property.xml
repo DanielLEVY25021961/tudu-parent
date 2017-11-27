@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Property">
+
+  <resultMap id="result" class="tudu.domain.model.PropertyConfiguration">
+    <result property="key" column="pkey" />
+    <result property="value" column="value" />
+  </resultMap>
+
+  <select id="getProperty" resultMap="result">
+    select pkey, value from property where pkey = #key#
+  </select>
+
+  <insert id="saveProperty">
+    insert into property (pkey, value) values (#key#, #value#)
+  </insert>
+  
+  <update id="updateProperty">
+    update property set pkey = #key#, value = #value# where pkey = #key#
+  </update>
+
+</sqlMap>

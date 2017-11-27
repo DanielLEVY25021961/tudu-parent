@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    
+    <bean id="observer" class="tudu.aspects.observer.DummyObserver" />
+    
+    <bean id="observerAspect" class="tudu.aspects.observer.aspectj.ObserverAspect">
+        <property name="event">
+            <bean class="tudu.service.events.impl.EventImpl">
+                <property name="listeners">
+                    <set>
+                        <ref bean="observer"/>
+                    </set>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    
+    <aop:config>
+        <aop:aspect id="observerAdvice" ref="observerAspect">
+            <aop:after-returning method="greffon" pointcut="execution(* tudu.domain.dao.ITodoDAO.*(..))"/>
+        </aop:aspect>
+    </aop:config>
+    
+</beans>

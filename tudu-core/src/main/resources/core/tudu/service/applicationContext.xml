@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+	<tx:annotation-driven/>
+	
+	<bean id="userManager" class="tudu.service.impl.UserServiceImpl">
+		<property name="userDAO">
+			<ref bean="userDAO" />
+		</property>
+		<property name="roleDAO">
+			<ref bean="roleDAO" />
+		</property>
+		<property name="todoListDAO">
+			<ref bean="todoListDAO" />
+		</property>
+		<property name="todoDAO">
+			<ref bean="todoDAO" />
+		</property>
+		<property name="propertyDAO">
+			<ref bean="propertyDAO" />
+		</property>
+		<property name="userCache">
+			<ref bean="userCache" />
+		</property>
+	</bean>
+
+	<bean id="todoListsManager"
+		class="tudu.service.impl.TodoListsServiceImpl">
+		<property name="todoListDAO">
+			<ref bean="todoListDAO" />
+		</property>
+		<property name="todoDAO">
+			<ref bean="todoDAO" />
+		</property>
+		<property name="userManager">
+			<ref bean="userManager" />
+		</property>
+	</bean>
+
+	<bean id="todosManager"
+		class="tudu.service.impl.TodosServiceImpl">
+		<property name="todoDAO">
+			<ref bean="todoDAO" />
+		</property>
+		<property name="todoListsManager">
+			<ref bean="todoListsManager" />
+		</property>
+		<property name="userManager">
+			<ref bean="userManager" />
+		</property>
+	</bean>
+
+	<bean id="configurationManager"
+		class="tudu.service.impl.ConfigurationServiceImpl">
+		<property name="propertyDAO">
+			<ref bean="propertyDAO" />
+		</property>
+		<property name="roleDAO">
+			<ref bean="roleDAO" />
+		</property>
+		<property name="userManager">
+			<ref bean="userManager" />
+		</property>
+	</bean>
+
+</beans>

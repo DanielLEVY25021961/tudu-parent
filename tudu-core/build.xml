@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="tudu-core" default="test" basedir=".">
+
+	<property name="lib.dir" value="./lib" />
+	<property name="lib.dir.runtime" value="${lib.dir}/runtime" />
+	<property name="lib.dir.test" value="${lib.dir}/test" />
+	<property name="build.dir" value="target" />
+	<property name="build.outputDir" value="${build.dir}/classes" />
+	<property name="build.srcDir" value="src/main/java/core" />
+	<property name="build.resourceDir" value="src/main/resources/core" />
+	<property name="build.testOutputDir" value="${build.dir}/test-classes" />
+	<property name="build.testDir" value="src/test/java/core" />
+	<property name="build.testResourceDir" value="src/test/resources/core" />
+	<property name="test.reports" value="${build.dir}/test-reports" />
+
+	<path id="build.classpath">
+		<fileset dir="${lib.dir.runtime}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	<path id="build.test.classpath">
+		<path refid="build.classpath" />
+		<fileset dir="${lib.dir.test}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- ====================================================================== -->
+	<!-- Compilation target                                                     -->
+	<!-- ====================================================================== -->
+
+	<target name="compile" description="Compile the code">
+		<mkdir dir="${build.outputDir}" />
+		<javac destdir="${build.outputDir}" nowarn="false" debug="true" optimize="false" deprecation="true" target="1.5" verbose="false" fork="false" source="1.5">
+			<src>
+				<pathelement location="${build.srcDir}" />
+			</src>
+			<classpath refid="build.classpath" />
+		</javac>
+		<copy todir="${build.outputDir}">
+			<fileset dir="${build.resourceDir}" />
+		</copy>
+	</target>
+
+	<!-- ====================================================================== -->
+	<!-- Test-compilation target                                                -->
+	<!-- ====================================================================== -->
+
+	<target name="compile-tests" depends="compile" description="Compile the test code">
+		<mkdir dir="${build.testOutputDir}" />
+		<javac destdir="${build.testOutputDir}" nowarn="false" debug="true" optimize="false" deprecation="true" target="1.5" verbose="false" fork="false" source="1.5">
+			<src>
+				<pathelement location="${build.testDir}" />
+			</src>
+			<classpath>
+				<path refid="build.test.classpath" />
+				<pathelement location="${build.outputDir}" />
+			</classpath>
+		</javac>
+		<copy todir="${build.testOutputDir}">
+			<fileset dir="${build.testResourceDir}" />
+		</copy>
+	</target>
+
+	<!-- ====================================================================== -->
+	<!-- Run all tests                                                          -->
+	<!-- ====================================================================== -->
+
+	<target name="test" depends="compile-tests" description="Run the test cases">
+		<mkdir dir="${test.reports}" />
+		<junit printSummary="yes" haltonerror="true" haltonfailure="true" fork="true" dir=".">
+			<sysproperty key="basedir" value="." />
+			<formatter type="xml" />
+			<formatter type="plain" usefile="false" />
+			<classpath>
+				<path refid="build.test.classpath" />
+				<pathelement location="${build.outputDir}" />
+				<pathelement location="${build.testOutputDir}" />
+			</classpath>
+			<batchtest todir="${test.reports}" unless="test">
+				<fileset dir="${build.testDir}">
+					<include name="**/Test*.java" />
+					<include name="**/*Test.java" />
+					<include name="**/*TestCase.java" />
+					<exclude name="**/*Abstract*Test.java" />
+				</fileset>
+			</batchtest>
+			<batchtest todir="${test.reports}" if="test">
+				<fileset dir="${build.testDir}">
+					<include name="**/${test}.java" />
+					<exclude name="**/*Abstract*Test.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+
+</project>

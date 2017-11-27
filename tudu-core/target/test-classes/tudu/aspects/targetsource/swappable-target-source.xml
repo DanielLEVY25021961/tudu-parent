@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"> 
+	
+	<bean id="tuduConnectionTarget" class="tudu.aspects.targetsource.impl.TuduConnectionImpl">
+        <constructor-arg value="originalBean" />
+    </bean>
+    
+    <bean id="tuduConnectionUser" class="tudu.aspects.targetsource.TuduConnectionUser">
+        <property name="tuduConnection" ref="tuduConnection" />
+    </bean>    
+    
+    <bean id="swapper" class="org.springframework.aop.target.HotSwappableTargetSource">
+        <constructor-arg ref="tuduConnectionTarget"/>
+    </bean>
+
+    <bean id="tuduConnection" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource" ref="swapper"/>
+    </bean>    
+    
+</beans>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"> 
+	
+	<!-- in memory database -->	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+		    <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+			<property name="url" value="jdbc:hsqldb:mem:tudu-test" />
+			<property name="username" value="sa" />
+			<property name="password" value="" />
+			<property name="suppressClose" value="true" />
+	</bean>
+    
+    <bean class="tudu.security.acl.InitAclDataBase">
+        <constructor-arg ref="dataSource" />
+    </bean>
+	
+	<!-- JPA Vendor adapter, uses Hibernate -->	
+	<bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="showSql" value="false" />
+        <property name="generateDdl" value="true" />
+        <property name="database" value="HSQL" />        
+    </bean>
+    
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+        <property name="persistenceXmlLocation" value="tudu/security/acl/persistence.xml"/>
+        <property name="jpaProperties" ref="jpaProperties" />
+    </bean>
+    
+    <!-- JPA annotations bean post processor, inject the DAO thanks to the annotations -->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+    <!-- Exception translation bean post processor, decorates beans that carry the Repository annotation  -->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+  
+    <bean id="tuduDAO" class="tudu.security.acl.TodoAclDAOImpl" />
+    
+	
+	<!-- transaction manager -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	
+    <tx:annotation-driven transaction-manager="transactionManager" />	
+    
+    <util:properties id="jpaProperties">
+        <prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+        <prop key="hibernate.cache.use_query_cache">false</prop>
+        <prop key="hibernate.cache.use_second_level_cache">false</prop>
+    </util:properties> 
+    
+</beans>

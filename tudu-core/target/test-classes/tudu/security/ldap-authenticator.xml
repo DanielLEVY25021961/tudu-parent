@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+    
+    
+    <sec:ldap-server url="ldap://localhost:10389/" id="contextSource" />
+    
+    <bean id="authenticator" class="org.springframework.security.providers.ldap.authenticator.PasswordComparisonAuthenticator">
+        <constructor-arg ref="contextSource" />
+        <property name="userDnPatterns">
+            <list>
+                <value>cn={0},ou=people,o=tudu</value>
+            </list>
+        </property>
+        <property name="passwordAttributeName" value="userPassword" />
+        <property name="passwordEncoder" ref="passwordEncoder" />
+    </bean>
+    
+    <bean id="passwordEncoder" class="org.springframework.security.providers.encoding.PlaintextPasswordEncoder" /> 
+    
+    
+    <bean id="populator" class="org.springframework.security.ldap.populator.DefaultLdapAuthoritiesPopulator">
+        <constructor-arg ref="contextSource" />
+        <constructor-arg value="ou=groups,o=tudu" />
+        <property name="groupRoleAttribute" value="cn" />
+        <property name="groupSearchFilter" value="(member={0})" />
+        <property name="convertToUpperCase" value="false" />
+        <property name="rolePrefix" value="profil_" />
+        <property name="defaultRole" value="profil_default" />
+    </bean>
+    
+    <bean id="ldapAuthProvider"
+        class="org.springframework.security.providers.ldap.LdapAuthenticationProvider">
+        <constructor-arg ref="authenticator" />
+        <constructor-arg ref="populator" />
+    </bean>
+</beans>
